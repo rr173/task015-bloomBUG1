@@ -78,8 +78,8 @@ func OptimalK(m, n uint64) uint64 {
 // Add 将元素加入过滤器：对其 k 个哈希位置全部置 1，并把加入计数加 1。
 // 重复加入同一元素不会改变已置位位数（幂等置位），但加入计数仍会递增。
 func (f *Filter) Add(item string) {
-	f.mu.RLock()
-	defer f.mu.RUnlock()
+	f.mu.Lock()
+	defer f.mu.Unlock()
 	for _, p := range f.positions(item) {
 		byteIdx := p / 8
 		bitIdx := p % 8
